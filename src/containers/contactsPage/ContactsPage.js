@@ -11,6 +11,12 @@ export const ContactsPage = ({ contacts, addContacts }) => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [duplicate, setDuplicate] = useState(false);
+  const resetForm = () => {
+    setName('');
+    setPhone('');
+    setEmail('');
+    setDuplicate(false);
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,11 +26,10 @@ export const ContactsPage = ({ contacts, addContacts }) => {
     */
    if (!duplicate) {
      addContacts({name, phone, email})
-     setName('');
-     setPhone('');
-     setEmail('');
+     resetForm();
    } else {
      alert('You already have this contact listed. Please record a new contact.');
+     resetForm();
    }
   };
 
@@ -33,8 +38,12 @@ export const ContactsPage = ({ contacts, addContacts }) => {
   contacts array variable in props
   */
   useEffect(() => {
-    if (contacts.filter(contact => contact === name)) {
+    const names = contacts.map(contact => contact.name);
+
+    if (names.includes(name)) {
       setDuplicate(true);
+    } else {
+      setDuplicate(false);
     };
   }, [contacts, name]);
 
