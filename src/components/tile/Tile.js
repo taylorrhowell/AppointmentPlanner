@@ -7,7 +7,14 @@ export const Tile = ({obj}) => {
   };
   return (
     <div className="tile-container">
-      {pData.map(data => <p className="tile">{data}</p>)}
+      {pData.map(function(data, dataIdx) {
+        if (dataIdx === 0) {
+          return <p className="title-tile">{data}</p>
+        } else {
+        return <p className="tile">{data}</p>
+        }
+      })
+      }
     </div>
   );
 };
